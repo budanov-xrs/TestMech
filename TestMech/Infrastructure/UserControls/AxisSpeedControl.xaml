@@ -1,0 +1,65 @@
+﻿<UserControl
+    x:Class="TestMech.Infrastructure.UserControls.AxisSpeedControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TestMech.ViewModels"
+    Width="170"
+    Height="220"
+    d:DataContext="{d:DesignInstance viewModels:AxisControlViewModel}"
+    mc:Ignorable="d">
+    <Border
+        Padding="9"
+        Background="White"
+        BorderBrush="{StaticResource Lg3}"
+        BorderThickness="1"
+        CornerRadius="6">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <Label
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Content="{Binding Axis}"
+                    FontSize="36"
+                    FontWeight="Bold" />
+                <Label
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Скорость оси"
+                    FontSize="20" />
+            </StackPanel>
+
+            <Label
+                Grid.Row="1"
+                Padding="0"
+                HorizontalAlignment="Center"
+                Content="{Binding RelativeSpeed}"
+                ContentStringFormat="{}{0:D0}%"
+                FontSize="32"
+                FontWeight="Medium" />
+
+            <TextBox
+                Grid.Row="2"
+                FontSize="24"
+                FontWeight="Regular"
+                Text="{Binding RelativeSpeed}"
+                TextAlignment="Center" />
+
+            <Button
+                Grid.Row="3"
+                Margin="0,10,0,0"
+                Command="{Binding SetSpeedCommand}"
+                Content="Установить" />
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,26 @@
+﻿<Window
+    x:Class="TestMech.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TestMech"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:TestMech.Infrastructure.UserControls"
+    xmlns:vm="clr-namespace:TestMech.ViewModels"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Horizontal">
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisY1}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisY2}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisX1}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisZ1}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisZ2}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisU1}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisU2}" />
+        <uc:AxisControl Margin="10" DataContext="{Binding AxisV1}" />
+    </StackPanel>
+</Window>

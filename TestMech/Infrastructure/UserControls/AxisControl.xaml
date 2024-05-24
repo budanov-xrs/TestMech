@@ -1,0 +1,101 @@
+﻿<UserControl
+    x:Class="TestMech.Infrastructure.UserControls.AxisControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:TestMech.ViewModels"
+    Width="170"
+    Height="220"
+    d:DataContext="{d:DesignInstance viewModels:AxisControlViewModel}"
+    mc:Ignorable="d">
+    <Border
+        Padding="9"
+        Background="White"
+        BorderBrush="{StaticResource Lg3}"
+        BorderThickness="1"
+        CornerRadius="6">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border
+                Grid.Row="0"
+                Height="35"
+                VerticalAlignment="Top">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.AxisModel.State}" Value="Ready">
+                                <Setter Property="Background" Value="#22C348" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.AxisModel.State}" Value="Error">
+                                <Setter Property="Background" Value="#F2271C" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.AxisModel.State}" Value="Running">
+                                <Setter Property="Background" Value="#0E73F6" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+            <Label
+                Grid.Row="0"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Content="{Binding Axis}"
+                FontSize="36"
+                FontWeight="Bold"
+                Foreground="{StaticResource CleanW}" />
+
+
+            <Label
+                Grid.Row="1"
+                Padding="0"
+                HorizontalAlignment="Center"
+                Content="{Binding ActualPosition}"
+                FontSize="32"
+                FontWeight="Medium" />
+
+            <TextBox
+                Grid.Row="2"
+                FontSize="24"
+                FontWeight="Regular"
+                Text="{Binding TargetPosition}"
+                TextAlignment="Center" />
+
+            <Grid Grid.Row="3" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding MoveCommand}"
+                    Content="Перейти" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{Binding HomingCommand}"
+                    Content="H"
+                    Visibility="{Binding CanHoming, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <Button
+                    Grid.Column="1"
+                    Width="40"
+                    Margin="5,0,0,0"
+                    Padding="5"
+                    Command="{Binding SetZero}"
+                    Content="0"
+                    Visibility="{Binding CanSetZero, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

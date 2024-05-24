@@ -1,0 +1,10 @@
+﻿<Application
+    x:Class="TestMech.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:TestMech"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary Source="/Arion.Style;component/ArionUiTheme.xaml" />
+    </Application.Resources>
+</Application>
