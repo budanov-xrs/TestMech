@@ -13,7 +13,7 @@
     d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal">
+    <WrapPanel Orientation="Horizontal">
         <uc:AxisControl Margin="10" DataContext="{Binding AxisY1}" />
         <uc:AxisControl Margin="10" DataContext="{Binding AxisY2}" />
         <uc:AxisControl Margin="10" DataContext="{Binding AxisX1}" />
@@ -22,5 +22,5 @@
         <uc:AxisControl Margin="10" DataContext="{Binding AxisU1}" />
         <uc:AxisControl Margin="10" DataContext="{Binding AxisU2}" />
         <uc:AxisControl Margin="10" DataContext="{Binding AxisV1}" />
-    </StackPanel>
+    </WrapPanel>
 </Window>

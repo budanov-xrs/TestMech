@@ -209,18 +209,18 @@ public class Axis : ObservableObject
         Master?.WriteSingleCoil(_move, 1);
     }
 
-    private ushort[] actualPosition = new ushort[2];
+    private short[] actualPosition = new short[2];
 
     private void Read()
     {
         if (Master == null) return;
 
-        actualPosition = new ushort[2];
+        actualPosition = new short[2];
         
-        Master.ReadHoldingRegisters(_readActual, 2, actualPosition);
-        double value = (actualPosition[0] << 16 | actualPosition[1]) * FirstParam / SecondParam;
+        Master.ReadInputRegister(_readActual, 1, actualPosition);
+        //double value = (actualPosition[0] << 16 | actualPosition[1]) * FirstParam / SecondParam;
 
-        ActualPosition = value;
+        ActualPosition = actualPosition[0];
 
         //var error = Master.ReadHoldingRegisters(Slave, 8707, 1);
 
@@ -231,7 +231,7 @@ public class Axis : ObservableObject
         //}
 
         // var inputs = new ushort[2];
-        
+
         // Master.ReadHoldingRegisters(377, 1, inputs);
 
         // DigitalInput = inputs[0];
@@ -262,8 +262,8 @@ public class Axis : ObservableObject
         // if (status[0] == 256 || b[3] || b[4]) State = State.Running;
         //
         // var jogSpeed = new ushort[1];
-            
-         // Master.ReadHoldingRegisters(0x6027, 1, jogSpeed);
+
+        // Master.ReadHoldingRegisters(0x6027, 1, jogSpeed);
     }
 
     private async void ReadAsync()
@@ -320,7 +320,7 @@ public class Axis : ObservableObject
 
     public void Stop()
     {
-        Master.WriteSingleRegister(24578, 64);
+        Master.WriteSingleRegister(_move, 0);
     }
 
     public void SetManualSpeed(int speed)

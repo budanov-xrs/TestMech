@@ -116,13 +116,13 @@ public class MainWindowViewModel : BaseViewModel
     
     public MainWindowViewModel()
     {
-        AxisY1 = new AxisControlViewModel("Y1", readActual: 1, setTarget: 1, move: 1);
-        AxisY2 = new AxisControlViewModel("Y2", readActual: 1, setTarget: 1, move: 1);
-        AxisX1 = new AxisControlViewModel("X1", readActual: 1, setTarget: 1, move: 1);
-        AxisU1 = new AxisControlViewModel("U1", readActual: 1, setTarget: 1, move: 1);
-        AxisU2 = new AxisControlViewModel("U2", readActual: 1, setTarget: 1, move: 1);
-        AxisV1 = new AxisControlViewModel("V1", readActual: 1, setTarget: 1, move: 1);
-        AxisZ1 = new AxisControlViewModel("Z1", readActual: 1, setTarget: 1, move: 1);
-        AxisZ2 = new AxisControlViewModel("Z2", readActual: 1, setTarget: 1, move: 1);
+        AxisY1 = new AxisControlViewModel("Y1", readActual: 0, setTarget: 20, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisY2 = new AxisControlViewModel("Y2", readActual: 1, setTarget: 21, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisU1 = new AxisControlViewModel("U1", readActual: 2, setTarget: 22, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisU2 = new AxisControlViewModel("U2", readActual: 3, setTarget: 23, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisZ1 = new AxisControlViewModel("Z1", readActual: 4, setTarget: 24, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisZ2 = new AxisControlViewModel("Z2", readActual: 5, setTarget: 25, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisX1 = new AxisControlViewModel("X", readActual: 6, setTarget: 26, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisV1 = new AxisControlViewModel("V", readActual: 7, setTarget: 27, move: 31) { Maximum = 1000, Minimum = 0 };
     }
 }

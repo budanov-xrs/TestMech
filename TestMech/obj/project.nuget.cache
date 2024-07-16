@@ -1,19 +1,25 @@
 {
   "version": 2,
-  "dgSpecHash": "XCQVI/xMkpdArbvOXpi0P8wcNKBKtQ0gmPNVyryTx0PONqeWHWB6ku6TQIfkMxLo6ySevLnnLaN+BcgavF9QpA==",
+  "dgSpecHash": "768ORtXVe3Y=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\TestMech.csproj",
+  "projectFilePath": "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\TestMech.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ss_six\\.nuget\\packages\\arion.style\\0.7.0\\arion.style.0.7.0.nupkg.sha512",
-    "C:\\Users\\ss_six\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
-    "C:\\Users\\ss_six\\.nuget\\packages\\nmodbus4\\2.1.0\\nmodbus4.2.1.0.nupkg.sha512"
+    "C:\\Users\\ARION\\.nuget\\packages\\arion.style\\0.7.0\\arion.style.0.7.0.nupkg.sha512",
+    "C:\\Users\\ARION\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
+    "C:\\Users\\ARION\\.nuget\\packages\\nmodbus4\\2.1.0\\nmodbus4.2.1.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Произошла ошибка при получении данных уязвимости пакета: Не удалось загрузить индекс службы для источника https://api.nuget.org/v3/index.json."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'NModbus4 2.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "Пакет \"NModbus4 2.1.0\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net6.0-windows7.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
       "libraryId": "NModbus4",
       "targetGraphs": [
         "net6.0-windows7.0"

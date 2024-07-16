@@ -1,30 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\TestMech.csproj": {}
+    "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\TestMech.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\TestMech.csproj": {
+    "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\TestMech.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\TestMech.csproj",
+        "projectUniqueName": "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\TestMech.csproj",
         "projectName": "TestMech",
-        "projectPath": "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\TestMech.csproj",
-        "packagesPath": "C:\\Users\\ss_six\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ss_six\\RiderProjects\\NetCore\\TestMech\\TestMech\\obj\\",
+        "projectPath": "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\TestMech.csproj",
+        "packagesPath": "C:\\Users\\ARION\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ARION\\source\\repos\\TestMech\\TestMech\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ss_six\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ARION\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -38,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -76,7 +78,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
