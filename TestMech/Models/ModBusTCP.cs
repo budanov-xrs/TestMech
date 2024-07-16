@@ -963,7 +963,7 @@ namespace TestMech.Models
                 data[i + 1] = (byte)(values[k] & 0xFF);
                 k++;
             }
-            bool r = WriteMultipleRegister(startaddr, howmanyregisters, data);
+             bool r = WriteMultipleRegister(startaddr, howmanyregisters, data);
             return r;
         }
     }

@@ -202,11 +202,11 @@ public class Axis : ObservableObject
         var bytes = BitConverter.GetBytes((int)Math.Truncate(TargetPosition * SecondParam / FirstParam));
         var positionL = BitConverter.ToUInt16(bytes, 0);
         var positionH = BitConverter.ToUInt16(bytes, 2);
-        var speed = Convert.ToUInt16(NominalSpeed * Speed * (RelativeSpeed / 100.0) / 100);
 
-        Master?.WriteMultipleRegister(_setTarget, 2, new ushort[2] { positionH, positionL });
+        //var a = Master?.WriteMultipleRegister((ushort)(_setTarget), 2, new ushort[2] { positionH, positionL });
+        var a = Master?.WriteSingleRegister(_setTarget, (ushort)TargetPosition);
 
-        Master?.WriteSingleCoil(_move, 1);
+        Master?.WriteSingleRegister(_move, 1);
     }
 
     private short[] actualPosition = new short[2];
@@ -218,9 +218,10 @@ public class Axis : ObservableObject
         actualPosition = new short[2];
         
         Master.ReadInputRegister(_readActual, 1, actualPosition);
+        ActualPosition = actualPosition[0];
+
         //double value = (actualPosition[0] << 16 | actualPosition[1]) * FirstParam / SecondParam;
 
-        ActualPosition = actualPosition[0];
 
         //var error = Master.ReadHoldingRegisters(Slave, 8707, 1);
 
