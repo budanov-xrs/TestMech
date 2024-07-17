@@ -14,7 +14,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
     private ModBusTcp _modbus;
 
     #endregion Private Properties
-    
+
     #region Properties
 
     #region Axis : string - Ось
@@ -45,8 +45,8 @@ public class AxisControlViewModel : INotifyPropertyChanged
         get => (double)AxisModel.TargetPosition;
         set
         {
-            if(value > Maximum) value = Maximum;
-            else if(value < Minimum) value = Minimum;
+            if (value > Maximum) value = Maximum;
+            else if (value < Minimum) value = Minimum;
             AxisModel.TargetPosition = value;
         }
     }
@@ -137,6 +137,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
     #region Maximum : int - Максимальное положение
 
     private int _maximum;
+
     public int Maximum
     {
         get => _maximum;
@@ -148,6 +149,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
     #region Minimum : int - Минимальное положение
 
     private int _minimum;
+
     public int Minimum
     {
         get => _minimum;
@@ -222,7 +224,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
     }
 
     #endregion SetHoming
-    
+
     #region TargetChange - Изменение значения Target
 
     /// <summary> Установка нуля </summary>
@@ -230,7 +232,10 @@ public class AxisControlViewModel : INotifyPropertyChanged
 
     private void OnTargetChangeCommandExecuted(object parameter)
     {
-        AxisModel.SetTargetPosition(TargetPosition);
+        if (double.TryParse((string)parameter, out var value))
+        {
+            AxisModel.SetTargetPosition(value);
+        }
     }
 
     private bool CanTargetChangeCommandExecute(object parameter)
@@ -241,7 +246,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
     #endregion TargetChange
 
     #endregion Commands
-    
+
     #region Constructor
 
     public AxisControlViewModel(string axis, ushort readActual, ushort setTarget, ushort move)
@@ -251,7 +256,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
         HomingCommand = new RelayCommand(OnHomingCommandExecuted, CanHomingCommandExecute);
         SetZero = new RelayCommand(OnSetZeroCommandExecuted, CanSetZeroCommandExecute);
         TargetChange = new RelayCommand(OnTargetChangeCommandExecuted, CanTargetChangeCommandExecute);
-        
+
         Axis = axis;
         AxisModel = new Axis(App.Modbus, readActual, setTarget, move);
         AxisModel.PropertyChanged += AxisModelOnPropertyChanged;

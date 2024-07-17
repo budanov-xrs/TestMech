@@ -66,11 +66,11 @@
                 Grid.Row="2"
                 FontSize="24"
                 FontWeight="Regular"
-                Text="{Binding TargetPosition}"
+                Text="{Binding TargetPosition, Mode=TwoWay}"
                 TextAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
-                        <i:InvokeCommandAction Command="{Binding TargetChange}" ></i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding TargetChange}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" ></i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
