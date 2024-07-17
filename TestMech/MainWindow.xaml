@@ -8,19 +8,42 @@
     xmlns:uc="clr-namespace:TestMech.Infrastructure.UserControls"
     xmlns:vm="clr-namespace:TestMech.ViewModels"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="760" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    Height="560"
     d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
     mc:Ignorable="d">
-
-    <WrapPanel Orientation="Horizontal">
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisY1}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisY2}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisX1}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisZ1}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisZ2}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisU1}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisU2}" />
-        <uc:AxisControl Margin="10" DataContext="{Binding AxisV1}" />
-    </WrapPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <WrapPanel Orientation="Horizontal">
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisY1}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisY2}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisX1}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisZ1}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisZ2}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisU1}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisU2}" />
+            <uc:AxisControl Margin="10" DataContext="{Binding AxisV1}" />
+        </WrapPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Label Content="Скорость"></Label>
+                <TextBox Width="300" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding ChangeSpeedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" ></i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </StackPanel>
+            <Button Grid.Column="1" Command="{Binding StopMotorsCommand}" Content="Стоп" />
+        </Grid>
+    </Grid>
 </Window>
