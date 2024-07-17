@@ -116,13 +116,35 @@ public class MainWindowViewModel : BaseViewModel
     
     public MainWindowViewModel()
     {
-        AxisY1 = new AxisControlViewModel("Y1", readActual: 0, setTarget: 20, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisY2 = new AxisControlViewModel("Y2", readActual: 1, setTarget: 21, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisU1 = new AxisControlViewModel("U1", readActual: 2, setTarget: 22, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisU2 = new AxisControlViewModel("U2", readActual: 3, setTarget: 23, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisZ1 = new AxisControlViewModel("Z1", readActual: 4, setTarget: 24, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisZ2 = new AxisControlViewModel("Z2", readActual: 5, setTarget: 25, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisX1 = new AxisControlViewModel("X", readActual: 6, setTarget: 26, move: 31) { Maximum = 1000, Minimum = 0 };
-        AxisV1 = new AxisControlViewModel("V", readActual: 7, setTarget: 27, move: 31) { Maximum = 1000, Minimum = 0 };
+        AxisY1 = new AxisControlViewModel("Y1", readActual: 0, setTarget: 0, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisY2 = new AxisControlViewModel("Y2", readActual: 1, setTarget: 1, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisU1 = new AxisControlViewModel("U1", readActual: 2, setTarget: 2, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisU2 = new AxisControlViewModel("U2", readActual: 3, setTarget: 3, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisZ1 = new AxisControlViewModel("Z1", readActual: 4, setTarget: 4, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisZ2 = new AxisControlViewModel("Z2", readActual: 5, setTarget: 5, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisX1 = new AxisControlViewModel("X", readActual: 6, setTarget: 6, move: 11) { Maximum = 1000, Minimum = 0 };
+        AxisV1 = new AxisControlViewModel("V", readActual: 7, setTarget: 7, move: 11) { Maximum = 1000, Minimum = 0 };
+
+        Thread _update = new Thread(Update);
+        _update.Start();
+    }
+
+    private short[] actualPosition = new short[2];
+
+    private void Update()
+    {
+
+        //while (true)
+        //{
+        //    if (App.Modbus == null) return;
+
+        //    actualPosition = new short[2];
+
+        //    App.Modbus.ReadInputRegister(12, 1, actualPosition);
+        //    //double value = (actualPosition[0] << 16 | actualPosition[1]) * FirstParam / SecondParam;
+
+        //    //ActualPosition = actualPosition[0];
+        //}
+
     }
 }
