@@ -65,7 +65,7 @@
             <TextBox
                 Grid.Row="2"
                 FontSize="24"
-                FontWeight="Regular"
+                FontWeight="Regular" TextChanged="{Binding TargetChange}"
                 Text="{Binding TargetPosition}"
                 TextAlignment="Center" />
 

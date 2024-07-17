@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="obj\Debug\net6.0-windows\Infrastructure\UserControls\" />
       <Folder Include="Views\" />
     </ItemGroup>
 

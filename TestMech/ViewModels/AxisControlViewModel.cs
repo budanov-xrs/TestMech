@@ -9,6 +9,12 @@ namespace TestMech.ViewModels;
 
 public class AxisControlViewModel : INotifyPropertyChanged
 {
+    #region Private Properties
+
+    private ModBusTcp _modbus;
+
+    #endregion Private Properties
+    
     #region Properties
 
     #region Axis : string - Ось
@@ -216,10 +222,25 @@ public class AxisControlViewModel : INotifyPropertyChanged
     }
 
     #endregion SetHoming
+    
+    #region TargetChange - Изменение значения Target
+
+    /// <summary> Установка нуля </summary>
+    public ICommand TargetChange { get; }
+
+    private void OnTargetChangeCommandExecuted(object parameter)
+    {
+        AxisModel.SetTargetPosition(TargetPosition);
+    }
+
+    private bool CanTargetChangeCommandExecute(object parameter)
+    {
+        return true;
+    }
+
+    #endregion TargetChange
 
     #endregion Commands
-
-    private ModBusTcp Modbus;
     
     #region Constructor
 
@@ -229,6 +250,7 @@ public class AxisControlViewModel : INotifyPropertyChanged
         SetSpeedCommand = new RelayCommand(OnSetSpeedCommandExecuted, CanSetSpeedCommandExecute);
         HomingCommand = new RelayCommand(OnHomingCommandExecuted, CanHomingCommandExecute);
         SetZero = new RelayCommand(OnSetZeroCommandExecuted, CanSetZeroCommandExecute);
+        TargetChange = new RelayCommand(OnTargetChangeCommandExecuted, CanTargetChangeCommandExecute);
         
         Axis = axis;
         AxisModel = new Axis(App.Modbus, readActual, setTarget, move);

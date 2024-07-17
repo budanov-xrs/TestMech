@@ -199,18 +199,14 @@ public class Axis : ObservableObject
 
     private void MovePosition()
     {
-        var bytes = BitConverter.GetBytes((int)Math.Truncate(TargetPosition * SecondParam / FirstParam));
-        var positionL = BitConverter.ToUInt16(bytes, 0);
-        var positionH = BitConverter.ToUInt16(bytes, 2);
-
-        //var a = Master?.WriteMultipleRegister((ushort)(_setTarget), 2, new ushort[2] { positionH, positionL });
-        var a = Master?.WriteSingleRegister(_setTarget, (ushort)TargetPosition);
+        Master?.WriteSingleRegister(_setTarget, (ushort)TargetPosition);
 
         Master?.WriteSingleRegister(_move, 1);
     }
 
     private short[] actualPosition = new short[2];
-
+    private bool _readAndSetTarget;
+    
     private void Read()
     {
         if (Master == null) return;
@@ -220,51 +216,16 @@ public class Axis : ObservableObject
         Master.ReadInputRegister(_readActual, 1, actualPosition);
         ActualPosition = actualPosition[0];
 
-        //double value = (actualPosition[0] << 16 | actualPosition[1]) * FirstParam / SecondParam;
+        if (_readAndSetTarget == false)
+        {
+            short[] targetPosition = new short[1];
+            Master.ReadInputRegister(_readActual, 1, targetPosition);
 
-
-        //var error = Master.ReadHoldingRegisters(Slave, 8707, 1);
-
-        //if (error[0] != 0)
-        //{
-        //    State = State.Error;
-        //    return;
-        //}
-
-        // var inputs = new ushort[2];
-
-        // Master.ReadHoldingRegisters(377, 1, inputs);
-
-        // DigitalInput = inputs[0];
-
-        // TODO Конвертировать input в биты
-        // var b = new BitArray(new int[] { inputs[0] });
-        //
-        // DigitalArray = b;
-        //
-        // if (b[0] == false)
-        // {
-        //     State = State.Error;
-        //     return;
-        // }
-        //
-        // // 2
-        // // 37 - правый лимит
-        // // 3 - левый лимит
-        // // 9 - джойстик +
-        // // 17 - джойстик -
-        // // 1 - не на лимитах и не едет
-        // // 65 - Ось Y на датчике
-        //
-        // var status = new ushort[1];
-        //
-        // Master.ReadHoldingRegisters(24578, 1, status);
-        // if (status[0] == 0) State = State.Ready;
-        // if (status[0] == 256 || b[3] || b[4]) State = State.Running;
-        //
-        // var jogSpeed = new ushort[1];
-
-        // Master.ReadHoldingRegisters(0x6027, 1, jogSpeed);
+            if (ActualPosition != targetPosition[0])
+            {
+                SetTargetPosition(ActualPosition);
+            }
+        }
     }
 
     private async void ReadAsync()
@@ -329,5 +290,10 @@ public class Axis : ObservableObject
         var value = (ushort)speed;
         var manual = (ushort)(NominalSpeed * value / 100);
         Master.WriteSingleRegister(0x6027, manual);
+    }
+
+    public void SetTargetPosition(double targetPosition)
+    {
+        Master?.WriteSingleRegister(_setTarget, (ushort)targetPosition);
     }
 }
