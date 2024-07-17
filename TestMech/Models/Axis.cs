@@ -224,6 +224,7 @@ public class Axis : ObservableObject
             if (ActualPosition != targetPosition[0])
             {
                 SetTargetPosition(ActualPosition);
+                _readAndSetTarget = true;
             }
         }
     }
