@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TestMech.ViewModels"
-    Width="170"
+    Width="170" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     Height="220"
     d:DataContext="{d:DesignInstance viewModels:AxisControlViewModel}"
     mc:Ignorable="d">
@@ -65,9 +65,15 @@
             <TextBox
                 Grid.Row="2"
                 FontSize="24"
-                FontWeight="Regular" TextChanged="{Binding TargetChange}"
+                FontWeight="Regular"
                 Text="{Binding TargetPosition}"
-                TextAlignment="Center" />
+                TextAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding TargetChange}" ></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
 
             <Grid Grid.Row="3" Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
