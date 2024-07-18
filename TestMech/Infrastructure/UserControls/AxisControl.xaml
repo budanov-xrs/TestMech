@@ -3,10 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:TestMech.ViewModels"
-    Width="170" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    Height="220"
+    Width="170"
+    Height="160"
     d:DataContext="{d:DesignInstance viewModels:AxisControlViewModel}"
     mc:Ignorable="d">
     <Border
@@ -70,38 +71,10 @@
                 TextAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
-                        <i:InvokeCommandAction Command="{Binding TargetChange}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" ></i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding TargetChange}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=Text}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-
-            <Grid Grid.Row="3" Margin="0,10,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button
-                    Grid.Column="0"
-                    Command="{Binding MoveCommand}"
-                    Content="Перейти" />
-                <Button
-                    Grid.Column="1"
-                    Width="40"
-                    Margin="5,0,0,0"
-                    Padding="5"
-                    Command="{Binding HomingCommand}"
-                    Content="H"
-                    Visibility="{Binding CanHoming, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                <Button
-                    Grid.Column="1"
-                    Width="40"
-                    Margin="5,0,0,0"
-                    Padding="5"
-                    Command="{Binding SetZero}"
-                    Content="0"
-                    Visibility="{Binding CanSetZero, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            </Grid>
         </Grid>
     </Border>
 </UserControl>

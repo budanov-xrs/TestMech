@@ -1,6 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System.Collections;
+using System.Windows.Input;
 using ShMeco.Infrastructure.ViewModel;
 using TestMech.Infrastructure.Commands;
+using TestMech.Models;
 
 namespace TestMech.ViewModels;
 
@@ -125,9 +127,36 @@ public class MainWindowViewModel : BaseViewModel
 
     #endregion AxisZ2
 
+    #region EmergencyStop : bool - Description
+
+    private bool _emergencyStop;
+
+    /// <summary> Description </summary>
+    public bool EmergencyStop
+    {
+        get => _emergencyStop;
+        set => SetField(ref _emergencyStop, value);
+    }
+
+    #endregion EmergencyStop
+
+    #region SystemReady : bool - Description
+
+    private bool _systemReady;
+
+    /// <summary> Description </summary>
+    public bool SystemReady
+    {
+        get => _systemReady;
+        set => SetField(ref _systemReady, value);
+    }
+
+    #endregion SystemReady
+
     #endregion Properties
 
-    public static App App;
+    private ModBusTcp _modbus;
+    private readonly Thread _readStatus;
 
     #region ChangeSpeed - Переход домой
 
@@ -156,7 +185,7 @@ public class MainWindowViewModel : BaseViewModel
 
     private void OnStopMotorsCommandExecuted(object parameter)
     {
-        App.Modbus.WriteSingleRegister(12, 2);
+        Bools[1] = true;
     }
 
     private bool CanStopMotorsCommandExecute(object parameter)
@@ -166,10 +195,31 @@ public class MainWindowViewModel : BaseViewModel
 
     #endregion
 
+    #region Move - Description
+
+    ///<summary> Description </summary>
+    public ICommand MoveCommand { get; }
+
+    private void OnMoveCommandExecuted(object parameter)
+    {
+        Bools[0] = true;
+    }
+
+    private bool CanMoveCommandExecute(object parameter)
+    {
+        return true;
+    }
+
+    #endregion Move
+    
+    public List<bool> Bools;
+    
     public MainWindowViewModel()
     {
+        _modbus = App.Modbus;
         ChangeSpeedCommand = new RelayCommand(OnChangeSpeedCommandExecuted, CanChangeSpeedCommandExecute);
         StopMotorsCommand = new RelayCommand(OnStopMotorsCommandExecuted, CanStopMotorsCommandExecute);
+        MoveCommand = new RelayCommand(OnMoveCommandExecuted, CanMoveCommandExecute);
         
         AxisY1 = new AxisControlViewModel("Y1", readActual: 0, setTarget: 0, move: 12) { Maximum = 1000, Minimum = 0 };
         AxisY2 = new AxisControlViewModel("Y2", readActual: 1, setTarget: 1, move: 12) { Maximum = 1000, Minimum = 0 };
@@ -180,12 +230,128 @@ public class MainWindowViewModel : BaseViewModel
         AxisX1 = new AxisControlViewModel("X", readActual: 6, setTarget: 6, move: 12) { Maximum = 1000, Minimum = 0 };
         AxisV1 = new AxisControlViewModel("V", readActual: 7, setTarget: 7, move: 12) { Maximum = 1000, Minimum = 0 };
 
+        Bools = new List<bool>(32);
+        
         Speed = 100;
-        SetSpeed(100);
+        SetSpeed(Speed);
+        
+        _readStatus = new Thread(ReadStatus);
+        _readStatus.Start();
     }
     
     private void SetSpeed(int value)
     {
         App.Modbus.WriteSingleRegister(11, (ushort)value);
+    }
+    
+    private List<bool> _status;
+    private bool[] _lastBools = new bool[32];
+
+    public bool Exit;
+    private void ReadStatus()
+    {
+        while (Exit == false)
+        {
+            var registers = new byte[1];
+            _modbus.ReadInputRegister(11, 1, registers);
+        
+            _status = ConvertHexToBitMask(ConvertIntToHex(registers[0])).ToList();
+
+            for (int i = 0; i < Bools.Count; i++)
+            {
+                if (_lastBools[i] != Bools[i])
+                {
+                    _lastBools = Bools.ToArray();
+                    var number = ConvertBitsMaskToInt(Bools.ToArray());
+                    _modbus.WriteSingleRegister(12, (ushort)number);
+                    break;
+                }
+            }
+            Thread.Sleep(10);
+        }
+    }
+
+    public void Unload()
+    {
+        Bools[2] = true;
+    }
+
+    public void Load()
+    {
+        Bools[3] = true;
+    }
+
+    public bool MotorsInPositions()
+    {
+        var registers = new byte[1];
+        _modbus.ReadInputRegister(11, 1, registers);
+
+        var array = ConvertHexToBitMask(ConvertIntToHex(registers[0])).ToList();
+        if (array[6])
+        {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private static string ConvertIntToHex(int number)
+    {
+        var hexString = "";
+
+        var main = number / 16;
+        var sub = number % 16;
+
+        hexString += GetIntToHex(main);
+        hexString += GetIntToHex(sub);
+
+        return hexString.PadLeft(4, '0');
+    }
+    
+    private static string GetIntToHex(int number) => number < 10 ? number.ToString() : ((char)('A' + number - 10)).ToString();
+
+    private static IEnumerable<bool> ConvertHexToBitMask(string hex)
+    {
+        var longValue = Convert.ToInt64(hex.Trim(), 16);
+        var binRepresentation = Convert.ToString(longValue, 2);
+        var mask = new bool[32];
+        for (var i = 0; i < binRepresentation.Length; i++)
+            mask[i] = binRepresentation[i] == '1';
+
+        return mask;
+    }
+
+    private static int ConvertBitsMaskToInt(bool[] bools)
+    {
+        BitArray bits = new BitArray(bools);
+        byte[] bytes = new byte[bits.Length / 8];
+        bits.CopyTo(bytes, 0);
+
+        return BitConverter.ToInt32(bytes, 0);
+    }
+
+    public void WaitLoad()
+    {
+        while (_status[3] == false) { }
+    }
+    
+    public void WaitUnload()
+    {
+        while (_status[4] == false) { }
+    }
+
+    public void WaitCloseDoor()
+    {
+        while (_status[7] == false) { }
+    }
+
+    public void EnableJoysticks()
+    {
+        Bools[6] = true;
+    }
+    
+    public void DisableJoysticks()
+    {
+        Bools[6] = false;
     }
 }
