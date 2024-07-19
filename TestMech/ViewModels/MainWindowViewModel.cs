@@ -293,6 +293,8 @@ public class MainWindowViewModel : BaseViewModel
 
     private void OnMoveCommandExecuted(object parameter)
     {
+        Bools[0] = false;
+        Thread.Sleep(500);
         Bools[0] = true;
     }
 
