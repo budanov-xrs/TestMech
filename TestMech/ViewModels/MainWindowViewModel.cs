@@ -276,6 +276,7 @@ public class MainWindowViewModel : BaseViewModel
 
     private void OnStopMotorsCommandExecuted(object parameter)
     {
+        Bools[0] = false;
         Bools[1] = true;
     }
 
