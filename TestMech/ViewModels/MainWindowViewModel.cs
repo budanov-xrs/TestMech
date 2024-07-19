@@ -278,6 +278,8 @@ public class MainWindowViewModel : BaseViewModel
     {
         Bools[0] = false;
         Bools[1] = true;
+        Thread.Sleep(500);
+        Bools[1] = false;
     }
 
     private bool CanStopMotorsCommandExecute(object parameter)
