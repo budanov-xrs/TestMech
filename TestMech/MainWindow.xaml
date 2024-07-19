@@ -101,7 +101,7 @@
             <Label
                 Grid.Row="2"
                 Grid.Column="1"
-                Content="{Binding EmergencyStop}" />
+                Content="{Binding MotorsInZero}" />
 
             <Label
                 Grid.Row="3"
@@ -110,62 +110,52 @@
             <Label
                 Grid.Row="3"
                 Grid.Column="1"
-                Content="{Binding EmergencyStop}" />
+                Content="{Binding TableLoaded}" />
 
             <Label
                 Grid.Row="4"
                 Grid.Column="0"
                 Content="Стол выгружен" />
-            <Rectangle
+            <Label
                 Grid.Row="4"
                 Grid.Column="1"
-                Width="20"
-                Height="20"
-                Fill="Red" />
+                Content="{Binding TableUnloaded}" />
 
             <Label
                 Grid.Row="0"
                 Grid.Column="3"
                 Content="Ошибка двигателей" />
-            <Rectangle
+            <Label
                 Grid.Row="0"
                 Grid.Column="4"
-                Width="20"
-                Height="20"
-                Fill="Red" />
+                Content="{Binding MotorsError}" />
 
             <Label
                 Grid.Row="1"
                 Grid.Column="3"
                 Content="Переход по заданию" />
-            <Rectangle
+            <Label
                 Grid.Row="1"
                 Grid.Column="4"
-                Width="20"
-                Height="20"
-                Fill="Red" />
+                Content="{Binding MotorsMovement}" />
 
             <Label
                 Grid.Row="2"
                 Grid.Column="3"
                 Content="Дверь закрыта" />
-            <Rectangle
+            <Label
                 Grid.Row="2"
                 Grid.Column="4"
-                Width="20"
-                Height="20"
-                Fill="Red" />
+                Content="{Binding DoorClosed}" />
 
             <Label
                 Grid.Row="3"
                 Grid.Column="3"
                 Content="Ворота закрыты" />
-            <Rectangle
+            <Label
                 Grid.Row="3"
                 Grid.Column="4"
-                Width="20"
-                Height="20"
-                Fill="Red" />
+                Content="{Binding GateClosed}" />
         </Grid>
     </Grid>
 </Window>
