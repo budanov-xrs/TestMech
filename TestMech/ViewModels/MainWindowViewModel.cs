@@ -152,6 +152,97 @@ public class MainWindowViewModel : BaseViewModel
     }
 
     #endregion SystemReady
+    
+    #region MotorsInZero : bool - Description
+
+    private bool _motorsInZero;
+
+    /// <summary> Description </summary>
+    public bool MotorsInZero
+    {
+        get => _motorsInZero;
+        set => SetField(ref _motorsInZero, value);
+    }
+
+    #endregion MotorsInZero
+    
+    #region TableLoaded : bool - Description
+
+    private bool _tableLoaded;
+
+    /// <summary> Description </summary>
+    public bool TableLoaded
+    {
+        get => _tableLoaded;
+        set => SetField(ref _tableLoaded, value);
+    }
+
+    #endregion TableLoaded
+    
+    #region TableUnloaded : bool - Description
+
+    private bool _tableUnloaded;
+
+    /// <summary> Description </summary>
+    public bool TableUnloaded
+    {
+        get => _tableUnloaded;
+        set => SetField(ref _tableUnloaded, value);
+    }
+
+    #endregion TableUnloaded
+    
+    #region MotorsError : bool - Description
+
+    private bool _motorsError;
+
+    /// <summary> Description </summary>
+    public bool MotorsError
+    {
+        get => _motorsError;
+        set => SetField(ref _motorsError, value);
+    }
+
+    #endregion MotorsError
+    
+    #region MotorsMovement : bool - Description
+
+    private bool _motorsMovement;
+
+    /// <summary> Description </summary>
+    public bool MotorsMovement
+    {
+        get => _motorsMovement;
+        set => SetField(ref _motorsMovement, value);
+    }
+
+    #endregion MotorsMovement
+    
+    #region DoorClosed : bool - Description
+
+    private bool _doorClosed;
+
+    /// <summary> Description </summary>
+    public bool DoorClosed
+    {
+        get => _doorClosed;
+        set => SetField(ref _doorClosed, value);
+    }
+
+    #endregion DoorClosed
+    
+    #region GateClosed : bool - Description
+
+    private bool _gateClosed;
+
+    /// <summary> Description </summary>
+    public bool GateClosed
+    {
+        get => _gateClosed;
+        set => SetField(ref _gateClosed, value);
+    }
+
+    #endregion GateClosed
 
     #endregion Properties
 
@@ -252,23 +343,39 @@ public class MainWindowViewModel : BaseViewModel
     {
         while (Exit == false)
         {
-            var registers = new byte[1];
+            var registers = new byte[2];
             _modbus.ReadInputRegister(11, 1, registers);
-        
-            _status = ConvertHexToBitMask(ConvertIntToHex(registers[0])).ToList();
+            var status = registers[0] * 256 + registers[1];
+            
+            _status = ConvertIntToBitMask(status).ToList();
 
+            ParseStatus();
+            
             for (int i = 0; i < Bools.Count; i++)
             {
                 if (_lastBools[i] != Bools[i])
                 {
                     _lastBools = Bools.ToArray();
-                    var number = ConvertBitsMaskToInt(Bools.ToArray());
+                    var number = ConvertBitMaskToInt(Bools.ToArray());
                     _modbus.WriteSingleRegister(12, (ushort)number);
                     break;
                 }
             }
             Thread.Sleep(10);
         }
+    }
+
+    private void ParseStatus()
+    {
+        EmergencyStop = _status[0];
+        SystemReady = _status[1];
+        MotorsInZero = _status[2];
+        TableLoaded = _status[3];
+        TableUnloaded = _status[4];
+        MotorsError = _status[5];
+        MotorsMovement = _status[6];
+        DoorClosed = _status[7];
+        GateClosed = _status[8];
     }
 
     public void Unload()
@@ -286,7 +393,7 @@ public class MainWindowViewModel : BaseViewModel
         var registers = new byte[1];
         _modbus.ReadInputRegister(11, 1, registers);
 
-        var array = ConvertHexToBitMask(ConvertIntToHex(registers[0])).ToList();
+        var array = ConvertIntToBitMask(registers[0]).ToList();
         if (array[6])
         {
             return false;
@@ -294,34 +401,16 @@ public class MainWindowViewModel : BaseViewModel
         
         return true;
     }
-    
-    private static string ConvertIntToHex(int number)
+
+    private static bool[] ConvertIntToBitMask(int value)
     {
-        var hexString = "";
-
-        var main = number / 16;
-        var sub = number % 16;
-
-        hexString += GetIntToHex(main);
-        hexString += GetIntToHex(sub);
-
-        return hexString.PadLeft(4, '0');
-    }
-    
-    private static string GetIntToHex(int number) => number < 10 ? number.ToString() : ((char)('A' + number - 10)).ToString();
-
-    private static IEnumerable<bool> ConvertHexToBitMask(string hex)
-    {
-        var longValue = Convert.ToInt64(hex.Trim(), 16);
-        var binRepresentation = Convert.ToString(longValue, 2);
-        var mask = new bool[32];
-        for (var i = 0; i < binRepresentation.Length; i++)
-            mask[i] = binRepresentation[i] == '1';
-
-        return mask;
+        BitArray b = new BitArray(new int[] { value });
+        bool[] bits = new bool[b.Count];
+        b.CopyTo(bits, 0);
+        return bits;
     }
 
-    private static int ConvertBitsMaskToInt(bool[] bools)
+    private static int ConvertBitMaskToInt(bool[] bools)
     {
         BitArray bits = new BitArray(bools);
         byte[] bytes = new byte[bits.Length / 8];
