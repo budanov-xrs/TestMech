@@ -15,7 +15,7 @@ body:
       label: Описание проблемы
       description: Also tell us, what did you expect to happen?
       placeholder: Tell us what you see!
-      value: ""
+      value: "text"
     validations:
       required: true
   - type: textarea
