@@ -38,16 +38,16 @@ body:
     validations:
       required: false
   - type: textarea
-  attributes:
-    label: Шаги для воспроизведения
-    description: Steps to reproduce the behavior.
-    placeholder: |
-      1. In this environment...
-      1. With this config...
-      1. Run '...'
-      1. See error...
-  validations:
-    required: false
+    attributes:
+      label: Шаги для воспроизведения
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. In this environment...
+        1. With this config...
+        1. Run '...'
+        1. See error...
+    validations:
+      required: false
   - type: textarea
     id: logs
     attributes:
