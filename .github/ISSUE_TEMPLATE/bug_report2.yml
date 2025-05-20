@@ -13,7 +13,6 @@ body:
     attributes:
       label: Описание проблемы
       description: Расскажи что произошло
-      value: ''
     validations:
       required: true
   - type: textarea
@@ -21,7 +20,6 @@ body:
     attributes:
       label: Ожидаемое поведение
       description: Также расскажите нам, чего вы ожидали?
-      value: ''
     validations:
       required: false
   - type: textarea
