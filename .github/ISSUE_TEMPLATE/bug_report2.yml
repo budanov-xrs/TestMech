@@ -28,6 +28,7 @@ body:
     validations:
       required: false
   - type: textarea
+    id: steps
     attributes:
       label: Шаги для воспроизведения
       description: Steps to reproduce the behavior.
