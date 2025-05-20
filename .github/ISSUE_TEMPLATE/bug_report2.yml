@@ -4,8 +4,7 @@ title: "[Bug]: "
 labels: bug
 projects: budanov-xrs/1
 type: Bug
-assignees:
-  - budanov-xrs
+assignees: budanov-xrs
 body:
   - type: markdown
     attributes:
