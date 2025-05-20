@@ -1,20 +1,19 @@
-name: Bug Report
+name: Form Bug Report
 description: File a bug report.
-title: "[Bug]: "
+title: "[Bug] "
 labels: bug
-projects: budanov-xrs/1
-assignees: budanov-xrs
+projects: Arion-Soft/17
+assignees: ''
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Спасибо, что нашли время заполнить это сообщение об ошибке!
   - type: textarea
     id: bug-description
     attributes:
       label: Описание проблемы
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      description: Расскажи что произошло
       value: "text"
     validations:
       required: true
@@ -22,8 +21,7 @@ body:
     id: expected-behavior
     attributes:
       label: Ожидаемое поведение
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      description: Также расскажите нам, чего вы ожидали?
       value: "text"
     validations:
       required: false
@@ -31,17 +29,17 @@ body:
     id: steps
     attributes:
       label: Шаги для воспроизведения
-      description: Steps to reproduce the behavior.
+      description: Шаги по воспроизведению поведения.
       placeholder: |
-        1. In this environment...
-        1. With this config...
-        1. Run '...'
-        1. See error...
+        1. Шаг 1...
+        1. Шаг 2...
+        1. Шаг 3...
+        1. Шаг 4...
     validations:
       required: false
   - type: textarea
     id: logs
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      label: Соответствующий вывод журнала
+      description: Пожалуйста, скопируйте и вставьте все соответствующие данные журнала. Они будут автоматически преобразованы в код.
       render: shell
